@@ -6,7 +6,6 @@ O seu sistema deverá lidar com coleções de usuários, músicas e gêneros de 
 
 Eventualmente, será necessário realizar operações de inserção, remoção e atualização en-
 volvendo tais coleções. Por exemplo, se um gênero que possui a ele associada uma música
-
 for removido, seu sistema deverá cuidar para que a existência dela não comprometa os
 requisitos que seguem. Cada usuário possui uma lista de gêneros musicais preferidos.
 Ela deve ser ordenada em ordem não-crescente, de acordo com a preferência do usuário.
