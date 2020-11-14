@@ -4,9 +4,9 @@ Projeto que consiste em um sistema básico aplicado em linguagem ***Java*** e **
 
 O seu sistema deverá lidar com coleções de usuários, músicas e gêneros de músicas.
 
-Eventualmente, será necessário realizar operações de inserção, remoção e atualização en-
-volvendo tais coleções. Por exemplo, se um gênero que possui a ele associada uma música
-for removido, seu sistema deverá cuidar para que a existência dela não comprometa os
+Eventualmente, será necessário realizar operações de inserção, remoção e atualização envolvendo tais coleções. 
+Por exemplo, se um gênero que possui a ele associada uma músicafor removido, 
+seu sistema deverá cuidar para que a existência dela não comprometa os
 requisitos que seguem. Cada usuário possui uma lista de gêneros musicais preferidos.
 Ela deve ser ordenada em ordem não-crescente, de acordo com a preferência do usuário.
 
