@@ -24,7 +24,7 @@ Ela deve ser ordenada em ordem não-crescente, de acordo com a preferência do u
 
 
 ### Tech Usadas. 
-| Linguagens | README |
+| Linguagens | Versão |
 | ------ | ------ |
 | Java/NetBeans | [Java SE 8u111 / 8u112](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html?ssSourceSiteId=otnpt) |
 | SQL Workbench | [8.0.22](https://dev.mysql.com/downloads/workbench/)| 
