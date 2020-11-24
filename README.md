@@ -1,4 +1,4 @@
-# Music Rating 🎶.
+# Top Week List 🎶.
 
 Projeto que consiste em um sistema básico aplicado em linguagem ***Java*** e ***SQL***. Ele tem a principal funcionalidade guardar avaliação do usuário como também recomendar gêneros musicais não avaliados para o usuário. 
 
