@@ -3,6 +3,10 @@
  */
 package dashboard;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ana Komase
@@ -16,6 +20,24 @@ public class TelaRecomendacao extends javax.swing.JFrame {
         initComponents();
     }
 
+    private void preencherTabelaRecomendacoes() {
+        try {
+            List<Recomendacoes> recomendacoes = DAO.RecomendacoesDAO.obterRecomendacoes();
+//            GenerosFavComboBox.setModel(new DefaultComboBoxModel<>(generos.toArray(new Generos[0])));
+            DefaultTableModel model;
+            model = new DefaultTableModel(new Object[]{"Nome", "Nota"}, 0);
+            //0 é o número de linhas vazias que seriam adicionadas na tabela a partir de
+            //uma nova construção da tabela, feita através do new DTM.
+            for (Recomendacoes r : recomendacoes) {
+                model.addRow(new Object[]{r.getNome(),r.getNota()});
+            }
+            tbRecomendacoes.setModel(model);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Tente novamente");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,15 +48,15 @@ public class TelaRecomendacao extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbRecomendacoes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbRecomendacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Oh Juliana - mc Niack", "0"}
+
             },
             new String [] {
                 "Música", "Posto"
@@ -48,7 +70,8 @@ public class TelaRecomendacao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tbRecomendacoes.setName("Recomendacoes"); // NOI18N
+        jScrollPane1.setViewportView(tbRecomendacoes);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Recomendações para você!");
@@ -134,6 +157,6 @@ public class TelaRecomendacao extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbRecomendacoes;
     // End of variables declaration//GEN-END:variables
 }

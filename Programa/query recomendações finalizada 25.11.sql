@@ -17,15 +17,15 @@ Apagar generos Favoritos
 DELETE FROM tb_generofavorito WHERE idUsuario = ? AND idGenero = ?
 
 -------------------------------------------------------
-Select f.idGenero, c.idMusica, m.nome, avg (a.nota) AS nota
-
+Select m.nome, avg (a.nota) AS nota
 from tb_generofavorito AS f
 LEFT JOIN tb_colecao AS c ON f.idGenero = c.idGenero
 LEFT JOIN tb_musica AS m ON c.idMusica = m.idMusica
 LEFT JOIN tb_avaliacao AS a ON a.idMusica = m.idMusica
 where f.idUsuario = 1 AND m.idMusica not in (select idMusica from tb_avaliacao where idUsuario = 1)
-Group by f.idGenero, c.idMusica, m.nome 
-order by nota DESC;
+Group by m.nome 
+order by nota DESC
+limit 3;
 
 
 Recomendações 
@@ -40,4 +40,4 @@ WHERE f.idUsuario <> a.idUsuario
 
 Avaliar 
 /* o select é o mesmo recomendações */
-UPDATE tb_musica SET nota = (((SELECT nota FROM tb_musica WHERE idMusica = ? )+? )/2 )
+UPDATE tb_recomendacoes SET nota = (((SELECT nota FROM tb_avaliacao WHERE idMusica = ? )+? )/2 )

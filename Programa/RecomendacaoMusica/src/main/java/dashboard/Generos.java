@@ -10,33 +10,26 @@ package dashboard;
  * @author giova
  */
 public class Generos {
-    private int id;
-    private String nome;
-
     
-    public Generos(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-    public int getId() {
-        return id;
+    private int idGenero;
+    private String tipo;
+
+    public int getIdGenero() {
+        return idGenero;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdGenero(int idGenero) {
+        this.idGenero = idGenero;
     }
 
-    public String getNome() {
-        return nome;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
-    
-    @Override
-    public String toString() {
-        return getNome();
-    }
+
+   
     
 }

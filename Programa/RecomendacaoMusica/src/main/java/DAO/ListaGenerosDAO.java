@@ -65,4 +65,21 @@ public class ListaGenerosDAO {
                     + "dados " + e.getMessage());
         }
     }
+    
+    public static void adicionar(int idGeneroFavorito) {
+        try (Connection conexao = ConnectionFactory.conector2()) {
+            PreparedStatement pstm;
+            pstm = conexao.prepareStatement("INSERT INTO tb_generofavorito (idUsuario, idGenero, registro) values (?,?,'2020-11-30')");
+
+            pstm.setInt(1, UsuarioLogado.getIdUsuarioLogado());
+            pstm.setInt(1, idGeneroFavorito);
+
+            pstm.execute();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir contato do banco de"
+                    + "dados " + e.getMessage());
+        }
+    }
+    
 }
