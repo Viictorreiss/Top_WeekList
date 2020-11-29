@@ -22,11 +22,10 @@ public class Avaliacao {
         this.idMusica = idMusica;
         this.nota = nota;
     }
-      
-      public Avaliacao(){
-      
-      }
 
+    Avaliacao() {
+    }
+      
     public int getIdAvaliacao() {
         return idAvaliacao;
     }

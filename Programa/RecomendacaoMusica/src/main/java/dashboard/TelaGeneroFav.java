@@ -5,18 +5,89 @@
  */
 package dashboard;
 
+import DAO.ConnectionFactory;
+import DAO.ListaGenerosDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ana Komase
  */
 public class TelaGeneroFav extends javax.swing.JFrame {
+//    Connection conexao = null;
+//    ResultSet rs = null;
+//    PreparedStatement pst = null;
 
+    private List <Integer> idsGenerosFavoritos = new ArrayList <Integer>();
+        
+        
+    
+    
     /**
      * Creates new form TelaGeneroFav
      */
     public TelaGeneroFav() {
         initComponents();
+        preencherTabela();
+        preencherComboBoxDeFavoritos();
+//        conexao = ConnectionFactory.conector2();
     }
+
+    private void preencherTabela() {
+        try {
+            List<GeneroFavorito> generos = DAO.ListaGenerosDAO.obterGeneros();
+//            GenerosFavComboBox.setModel(new DefaultComboBoxModel<>(generos.toArray(new Generos[0])));
+            DefaultTableModel model;
+            model = new DefaultTableModel(new Object[]{"Genero", "Data de Inserção"},0);
+            //0 é o número de linhas vazias que seriam adicionadas na tabela a partir de
+            //uma nova construção da tabela, feita através do new DTM.
+            for (GeneroFavorito f : generos) {
+                model.addRow(new Object[]{f.getTipo(), f.getRegistro()});
+            }
+            tbGeneroFavorito.setModel(model);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Tente novamente");
+        }
+    }
+
+    private void preencherComboBoxDeFavoritos() {
+       deleteCombo.removeAllItems();
+        try {
+            List<GeneroFavorito> generos = DAO.ListaGenerosDAO.obterGeneros();
+            
+
+            for (GeneroFavorito f : generos) {
+                deleteCombo.addItem(f.getTipo());
+                idsGenerosFavoritos.add(f.getIdGeneroFavorito());
+                
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Tente novamente");
+        }
+    }
+    
+//public void fetch() {
+//        try {
+//            String q = "SELECT * FROM tb_generofavorito";
+//            pst = conexao.prepareStatement(q);
+//            rs = pst.executeQuery();
+//            System.out.println(q);
+////            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+//        } catch (Exception e) {
+//        }
+//        
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,24 +99,26 @@ public class TelaGeneroFav extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbGeneroFavorito = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        deleteCombo = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbGeneroFavorito.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        tbGeneroFavorito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Funk"},
-                {"Rock"},
-                {"Pop"},
-                {"Clássicas"}
+
             },
             new String [] {
-                "Gênero"
+                "Gênero", "Data de Inserção"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbGeneroFavorito.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tbGeneroFavorito);
 
         jButton2.setText(" ↩");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +126,15 @@ public class TelaGeneroFav extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jButton1.setText("Deletar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("jButton3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,13 +145,31 @@ public class TelaGeneroFav extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(71, 71, 71))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox2, 0, 81, Short.MAX_VALUE)
+                    .addComponent(deleteCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -79,10 +179,19 @@ public class TelaGeneroFav extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            TelaDashboard td = new TelaDashboard();
-            td.setVisible(true);
-            this.dispose();
+        TelaDashboard td = new TelaDashboard();
+        td.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int index = deleteCombo.getSelectedIndex();
+        int idParaDeletar = idsGenerosFavoritos.get(index);
+        ListaGenerosDAO.remover(idParaDeletar);
+        JOptionPane.showMessageDialog(null, "Registro deletado com sucesso");
+        preencherTabela();
+        preencherComboBoxDeFavoritos();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,8 +229,12 @@ public class TelaGeneroFav extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> deleteCombo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbGeneroFavorito;
     // End of variables declaration//GEN-END:variables
 }
