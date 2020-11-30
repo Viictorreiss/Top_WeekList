@@ -13,18 +13,16 @@ package dashboard;
  * @author Ana Komase
  */
 public class AvaliarMusica {
-    private String nomeMusica;
+    private String nome;
     private int nota;
-    private String genero;
     
     /**
      *
      * @param genero
      * @param nomeMusica
      */
-    public AvaliarMusica(String genero, String nomeMusica, int nota){
-       this.nomeMusica = nomeMusica;
-       this.genero = genero;
+    public AvaliarMusica(){
+       this.nome = nome;
        this.nota = nota;
         
     }
@@ -33,38 +31,24 @@ public class AvaliarMusica {
         this.nota = nota;
     }
 
-    public AvaliarMusica(String nomeMusica) {
-        this.nomeMusica = nomeMusica;
+    public AvaliarMusica(String nome) {
+        this.nome = nome;
     }
   
  
     public String getNomeMusica() {
-        return nomeMusica;
+        return nome;
     }
 
-    public void setNomeMusica(String nomeMusica) {
-        this.nomeMusica = nomeMusica;
+    public void setNomeMusica(String nome) {
+        this.nome = nome;
     }
 
-    public double getNota() {
+    public int getNota() {
         return nota;
     }
 
     public void setNota(int nota) {
         this.nota = nota;
     }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public void add(AvaliarMusica avaliarMusica) {
-    }
-
- 
-   
 }

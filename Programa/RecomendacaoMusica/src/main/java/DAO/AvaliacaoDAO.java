@@ -12,64 +12,60 @@ import java.sql.SQLException;
 import dashboard.AvaliarMusica;
 import java.util.ArrayList;
 import java.util.List;
-
+import loginCadastro.UsuarioLogado;
 
 /**
  *
  * @author felip
  */
 public class AvaliacaoDAO {
-    
-    public void inserir(AvaliarMusica avaliarMusica) throws SQLException{
+
+    public void inserir(AvaliarMusica avaliarMusica) throws SQLException {
         String insert = "insert into tb_musica(nome) values(?)";
         String insert2 = "insert into tb_avaliacao(nota) values(?)";
-        
-        try (Connection conexao = ConnectionFactory.conector2()){
+
+        try (Connection conexao = ConnectionFactory.conector2()) {
             PreparedStatement pst = conexao.prepareStatement(insert);
             pst.setString(1, avaliarMusica.getNomeMusica());
             //atualiza o banco de dados com os dados do formulário
             pst.executeUpdate();
         }
-        
-         try (Connection conexao = ConnectionFactory.conector2()) {
+
+        try (Connection conexao = ConnectionFactory.conector2()) {
             //consulta ao banco de dados das caixas de texto
             PreparedStatement pst = conexao.prepareStatement(insert2);
             pst.setInt(1, (int) avaliarMusica.getNota());
             pst.executeUpdate();
         }
     }
-        
-      
+
     /**
-     * @return
-     * @throws SQLException
+     * @return @throws SQLException
      */
-    public static List<AvaliarMusica> obterAvaliacoes() throws SQLException{
-       String select = "select * from tb_musica";
-       String select2 = "select * from tb_avaliacao";
-        List<AvaliarMusica> avaliacoes = new ArrayList<>();
-        try (Connection conexao = ConnectionFactory.conector2()){
-            PreparedStatement pst = conexao.prepareStatement(select);
+    public static List<AvaliarMusica> obterAvaliacoes() throws SQLException {
+        int idUsuario = UsuarioLogado.getIdUsuarioLogado();
+        String sql = "SELECT m.nome, a.nota\n"
+                + "FROM tb_musica AS m\n"
+                + "LEFT JOIN tb_avaliacao AS a ON m.idMusica = a.idMusica\n"
+                + "WHERE a.idUsuario = ?;";
+        List<dashboard.AvaliarMusica> avaliarMusicas = new ArrayList<>();
+
+        try (Connection conexao = ConnectionFactory.conector2()) {
+            PreparedStatement pst = conexao.prepareStatement(sql);
+            pst.setInt(1, idUsuario);
             ResultSet rs = pst.executeQuery();
+            System.out.print("Sucesso");
             while (rs.next()) {
-                String nomeMusica = rs.getString("nome");
-                AvaliarMusica avaliarMusica = new AvaliarMusica(nomeMusica);
-                avaliarMusica.add(avaliarMusica);
-            }
-        
-        }
-        try (Connection conexao = ConnectionFactory.conector2()){
-            PreparedStatement pst = conexao.prepareStatement(select2);
-            ResultSet rs;
-            rs = pst.executeQuery();
-            while (rs.next()) {
+                String nome = rs.getString("nome");
                 int nota = rs.getInt("nota");
-                AvaliarMusica avaliarMusica = new AvaliarMusica(nota);
-                avaliarMusica.add(avaliarMusica);
+                AvaliarMusica avaliarMusica = new AvaliarMusica();
+                avaliarMusica.setNomeMusica(nome);
+                avaliarMusica.setNota(nota);
+                avaliarMusicas.add(avaliarMusica);
+
             }
-            return avaliacoes;
-         
+            return avaliarMusicas;
         }
-        
+
     }
 }

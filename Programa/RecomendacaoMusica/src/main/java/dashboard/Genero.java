@@ -9,7 +9,7 @@ package dashboard;
  *
  * @author giova
  */
-public class Generos {
+public class Genero {
     
     private int idGenero;
     private String tipo;

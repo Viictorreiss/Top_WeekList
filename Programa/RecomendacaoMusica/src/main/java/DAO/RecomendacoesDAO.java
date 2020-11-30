@@ -28,7 +28,7 @@ public class RecomendacoesDAO {
                 + "LEFT JOIN tb_colecao AS c ON f.idGenero = c.idGenero\n"
                 + "LEFT JOIN tb_musica AS m ON c.idMusica = m.idMusica\n"
                 + "LEFT JOIN tb_avaliacao AS a ON a.idMusica = m.idMusica\n"
-                + "where f.idUsuario = 1 AND m.idMusica not in (select idMusica from tb_avaliacao where idUsuario = 1)\n"
+                + "where f.idUsuario = ? AND m.idMusica not in (select idMusica from tb_avaliacao where idUsuario = ?)\n"
                 + "Group by m.nome\n"
                 + "order by nota DESC\n"
                 + "limit 3;";
@@ -37,6 +37,7 @@ public class RecomendacoesDAO {
         try (Connection conexao = ConnectionFactory.conector2()) {
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idUsuario);
+            pst.setInt(2, idUsuario);
             ResultSet rs = pst.executeQuery();
             System.out.print("Sucesso");
             while (rs.next()) {
@@ -45,6 +46,7 @@ public class RecomendacoesDAO {
                 Recomendacoes recomendacao = new Recomendacoes();
                 recomendacao.setNota(nota);
                 recomendacao.setNome(nome);
+                recomendacoes.add(recomendacao);
             }
             return recomendacoes;
         }

@@ -27,7 +27,7 @@ public class TelaGeneroFav extends javax.swing.JFrame {
 //    PreparedStatement pst = null;
 
     private List<Integer> idsGenerosFavoritos = new ArrayList<Integer>();
-    private List<Integer> idsGeneroNãoFavorito = new ArrayList<Integer>();
+    private List<Integer> idsGeneroNaoFavorito = new ArrayList<Integer>();
     /**
      * Creates new form TelaGeneroFav
      */
@@ -35,12 +35,13 @@ public class TelaGeneroFav extends javax.swing.JFrame {
         initComponents();
         preencherTabela();
         preencherComboBoxDeFavoritos();
+        preencherComboBoxNaoFavoritos();
 //        conexao = ConnectionFactory.conector2();
     }
 
     private void preencherTabela() {
         try {
-            List<GeneroFavorito> generos = DAO.ListaGenerosDAO.obterGeneros();
+            List<GeneroFavorito> generos = DAO.ListaGenerosDAO.obterGenerosFavoritos();
 //            GenerosFavComboBox.setModel(new DefaultComboBoxModel<>(generos.toArray(new Generos[0])));
             DefaultTableModel model;
             model = new DefaultTableModel(new Object[]{"Genero", "Data de Inserção"}, 0);
@@ -59,8 +60,9 @@ public class TelaGeneroFav extends javax.swing.JFrame {
 
     private void preencherComboBoxDeFavoritos() {
         deleteCombo.removeAllItems();
+        idsGenerosFavoritos = new ArrayList();
         try {
-            List<GeneroFavorito> generos = DAO.ListaGenerosDAO.obterGeneros();
+            List<GeneroFavorito> generos = DAO.ListaGenerosDAO.obterGenerosFavoritos();
 
             for (GeneroFavorito f : generos) {
                 deleteCombo.addItem(f.getTipo());
@@ -74,19 +76,19 @@ public class TelaGeneroFav extends javax.swing.JFrame {
         }
     }
 
-    private void preencherComboBoxNãoFavoritos() {
+    private void preencherComboBoxNaoFavoritos() {
         addCombo.removeAllItems();
+        //Esse método ele remove do combo o que tinha antes, e vai adicionar novamente.
+        //Colocamos esse método para salvar tempo e para não repetir itens quando fosse dar um
+        //atualizar na tela.
+        idsGeneroNaoFavorito = new ArrayList();
+        
         try {
-            int idUsuario = UsuarioLogado.getIdUsuarioLogado();
-            String sql = "SELECT g.idGenero, g.tipo\n"
-                    + "from tb_genero as g\n"
-                    + "left join tb_generofavorito as f on f.idGenero = g.idGenero\n"
-                    + "where g.idGenero not in (select idGenero from tb_generofavorito where idUsuario = ? );";
-            List<dashboard.Generos> addgenero = new ArrayList<>();
+            List<Genero> generos = DAO.ListaGenerosDAO.obterGenerosNaoFavoritos();
 
-            for (Generos f : addgenero) {
+            for (Genero f : generos) {
                 addCombo.addItem(f.getTipo());
-                idsGeneroNãoFavorito.add(f.getIdGenero());
+                idsGeneroNaoFavorito.add(f.getIdGenero());
 
             }
 
@@ -214,18 +216,18 @@ public class TelaGeneroFav extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Registro deletado com sucesso");
         preencherTabela();
         preencherComboBoxDeFavoritos();
-        preencherComboBoxNãoFavoritos();
+        preencherComboBoxNaoFavoritos();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void addBottomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBottomActionPerformed
         
         int index = addCombo.getSelectedIndex();
-        int idParaAdicionar = idsGeneroNãoFavorito.get(index);
+        int idParaAdicionar = idsGeneroNaoFavorito.get(index);
         ListaGenerosDAO.adicionar(idParaAdicionar);
         JOptionPane.showMessageDialog(null, "Registro adicionado com sucesso");
         preencherTabela();
         preencherComboBoxDeFavoritos();
-        preencherComboBoxNãoFavoritos();
+        preencherComboBoxNaoFavoritos();
     }//GEN-LAST:event_addBottomActionPerformed
 
     /**

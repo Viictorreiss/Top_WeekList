@@ -16,11 +16,21 @@ public class TelaRecomendacao extends javax.swing.JFrame {
     /**
      * Creates new form TelaRecomendacao
      */
-    public TelaRecomendacao() {
+    public TelaRecomendacao() {// aqui é o construtor (19 até 22)
+        //esse é um método que o NetBeans gerou e ele literalmente "monta" o visual.
+        //E você precisa continuar no construtor com os métodos para que o programa possa
+        //chamar as funções necessárias para rodar.
+        //Analogia do Fezão: Criar um método e não chamar ele, é a mesma coisa que você
+        //colocar um ingrediente numa receita, e no passo a passo do prato você não usar.
         initComponents();
+        preencherTabelaRecomendacoes();
+        //Dica do Fezão: Se o método estiver cinza(netbeans), ele não está sendo chamado.
+        //ou seja, do ponto de vista do compilador, ele tá jogando o método fora.
+        //Se ele estiver amarelinho, ele está sendo chamado, não necessariamente pelo construtor.
+        //Pode ser um outro método private, contudo, quando amarelinho ele não é mais inútil.
     }
 
-    private void preencherTabelaRecomendacoes() {
+    private void preencherTabelaRecomendacoes() { //aqui é o método
         try {
             List<Recomendacoes> recomendacoes = DAO.RecomendacoesDAO.obterRecomendacoes();
 //            GenerosFavComboBox.setModel(new DefaultComboBoxModel<>(generos.toArray(new Generos[0])));
@@ -105,8 +115,8 @@ public class TelaRecomendacao extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
