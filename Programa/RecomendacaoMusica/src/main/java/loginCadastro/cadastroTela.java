@@ -21,29 +21,13 @@ public class cadastroTela extends javax.swing.JFrame {
     /**
      * Creates new form cadastroTela
      */
-    /**Connection conexao = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;*/
     
     public cadastroTela() {
         initComponents();
-        //conexao = ConnectionFactory.conector();
+        setLocationRelativeTo(null);
     }
     
-    //cadastra os usuários 
-    /**private void adicionar(){
-      String sql = "insert into tbusuarios(nomeUsuario, senhaUsuario) values(?,?)";
-      
-        try {
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, escolherNomeField.getText());
-            pst.setString(2, escolherSenhaPasswordField.getText());
-            //atualiza o banco de dados com os dados do formulário
-            pst.executeUpdate();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e);
-        }
-    }*/
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,12 +136,7 @@ public class cadastroTela extends javax.swing.JFrame {
     }//GEN-LAST:event_fazerLoginButtonActionPerformed
 
     private void cadastroFeitoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroFeitoButtonActionPerformed
-//chamar o método adicionar
-        /**adicionar();
-        principalTela principal = new principalTela();
-        principal.setVisible(true);
-        this.dispose();*/
-        
+
         String cadastro = escolherNomeField.getText();
         String senhaCadastro = new String(escolherSenhaPasswordField.getPassword());
         Usuarios usuarios = new Usuarios(cadastro, senhaCadastro);

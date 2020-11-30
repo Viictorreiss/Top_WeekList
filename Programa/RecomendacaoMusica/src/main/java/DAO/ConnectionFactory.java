@@ -26,7 +26,7 @@ public class ConnectionFactory {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/db_recomendacoes?useTimezone=true&serverTimezone=UTC";
         String user = "root";
-        String password = "admin123";
+        String password = "taekook23081564";
         try {
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, user, password);
@@ -44,7 +44,7 @@ public class ConnectionFactory {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/db_recomendacoes?useTimezone=true&serverTimezone=UTC";
         String user = "root";
-        String password = "admin123";
+        String password = "taekook23081564";
         try {
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, user, password);

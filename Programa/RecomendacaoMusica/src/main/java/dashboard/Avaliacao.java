@@ -11,36 +11,18 @@ package dashboard;
  */
 public class Avaliacao {
     
-    private int idAvaliacao;
-    private int idUsuario;
     private int idMusica;
+    private String nome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
     private int nota;
     
-      public Avaliacao(int idAvaliacao, int idUsuario, int idMusica, int nota) {
-        this.idAvaliacao = idAvaliacao;
-        this.idUsuario = idUsuario;
-        this.idMusica = idMusica;
-        this.nota = nota;
-    }
-
-    Avaliacao() {
-    }
-      
-    public int getIdAvaliacao() {
-        return idAvaliacao;
-    }
-
-    public void setIdAvaliacao(int idAvaliacao) {
-        this.idAvaliacao = idAvaliacao;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public int getIdMusica() {
         return idMusica;

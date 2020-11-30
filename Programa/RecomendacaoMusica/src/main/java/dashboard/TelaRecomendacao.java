@@ -24,6 +24,7 @@ public class TelaRecomendacao extends javax.swing.JFrame {
         //colocar um ingrediente numa receita, e no passo a passo do prato você não usar.
         initComponents();
         preencherTabelaRecomendacoes();
+        setLocationRelativeTo(null);
         //Dica do Fezão: Se o método estiver cinza(netbeans), ele não está sendo chamado.
         //ou seja, do ponto de vista do compilador, ele tá jogando o método fora.
         //Se ele estiver amarelinho, ele está sendo chamado, não necessariamente pelo construtor.
@@ -35,7 +36,7 @@ public class TelaRecomendacao extends javax.swing.JFrame {
             List<Recomendacoes> recomendacoes = DAO.RecomendacoesDAO.obterRecomendacoes();
 //            GenerosFavComboBox.setModel(new DefaultComboBoxModel<>(generos.toArray(new Generos[0])));
             DefaultTableModel model;
-            model = new DefaultTableModel(new Object[]{"Nome", "Nota"}, 0);
+            model = new DefaultTableModel(new Object[]{"Nome", "Posto"}, 0);
             //0 é o número de linhas vazias que seriam adicionadas na tabela a partir de
             //uma nova construção da tabela, feita através do new DTM.
             for (Recomendacoes r : recomendacoes) {
@@ -73,7 +74,7 @@ public class TelaRecomendacao extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

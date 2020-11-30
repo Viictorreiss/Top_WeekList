@@ -14,6 +14,7 @@ public class TelaDashboard extends javax.swing.JFrame {
      */
     public TelaDashboard() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -15,18 +15,23 @@ package dashboard;
 public class AvaliarMusica {
     private String nome;
     private int nota;
-    
-    /**
-     *
-     * @param genero
-     * @param nomeMusica
-     */
+    private int idAvaliacao;
+
+
     public AvaliarMusica(){
        this.nome = nome;
        this.nota = nota;
         
     }
+    
+    public int getIdAvaliacao() {
+        return idAvaliacao;
+    }
 
+    public void setIdAvaliacao(int idAvaliacao) {
+        this.idAvaliacao = idAvaliacao;
+    }
+    
     public AvaliarMusica(int nota) {
         this.nota = nota;
     }
@@ -36,11 +41,11 @@ public class AvaliarMusica {
     }
   
  
-    public String getNomeMusica() {
+    public String getNome() {
         return nome;
     }
 
-    public void setNomeMusica(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -51,4 +56,5 @@ public class AvaliarMusica {
     public void setNota(int nota) {
         this.nota = nota;
     }
+    
 }

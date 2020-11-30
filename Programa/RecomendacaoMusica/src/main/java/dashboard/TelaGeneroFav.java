@@ -22,9 +22,7 @@ import loginCadastro.UsuarioLogado;
  * @author Ana Komase
  */
 public class TelaGeneroFav extends javax.swing.JFrame {
-//    Connection conexao = null;
-//    ResultSet rs = null;
-//    PreparedStatement pst = null;
+
 
     private List<Integer> idsGenerosFavoritos = new ArrayList<Integer>();
     private List<Integer> idsGeneroNaoFavorito = new ArrayList<Integer>();
@@ -36,13 +34,13 @@ public class TelaGeneroFav extends javax.swing.JFrame {
         preencherTabela();
         preencherComboBoxDeFavoritos();
         preencherComboBoxNaoFavoritos();
-//        conexao = ConnectionFactory.conector2();
+        setLocationRelativeTo(null);
+
     }
 
     private void preencherTabela() {
         try {
             List<GeneroFavorito> generos = DAO.ListaGenerosDAO.obterGenerosFavoritos();
-//            GenerosFavComboBox.setModel(new DefaultComboBoxModel<>(generos.toArray(new Generos[0])));
             DefaultTableModel model;
             model = new DefaultTableModel(new Object[]{"Genero", "Data de Inserção"}, 0);
             //0 é o número de linhas vazias que seriam adicionadas na tabela a partir de
@@ -98,17 +96,6 @@ public class TelaGeneroFav extends javax.swing.JFrame {
         }
     }
 
-//public void fetch() {
-//        try {
-//            String q = "SELECT * FROM tb_generofavorito";
-//            pst = conexao.prepareStatement(q);
-//            rs = pst.executeQuery();
-//            System.out.println(q);
-////            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-//        } catch (Exception e) {
-//        }
-//        
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,7 +123,15 @@ public class TelaGeneroFav extends javax.swing.JFrame {
             new String [] {
                 "Gênero", "Data de Inserção"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbGeneroFavorito.setName(""); // NOI18N
         jScrollPane1.setViewportView(tbGeneroFavorito);
 

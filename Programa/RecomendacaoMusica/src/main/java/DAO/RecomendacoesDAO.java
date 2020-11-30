@@ -31,7 +31,7 @@ public class RecomendacoesDAO {
                 + "where f.idUsuario = ? AND m.idMusica not in (select idMusica from tb_avaliacao where idUsuario = ?)\n"
                 + "Group by m.nome\n"
                 + "order by nota DESC\n"
-                + "limit 3;";
+                + "limit 5;";
         List<dashboard.Recomendacoes> recomendacoes = new ArrayList<>();
 
         try (Connection conexao = ConnectionFactory.conector2()) {

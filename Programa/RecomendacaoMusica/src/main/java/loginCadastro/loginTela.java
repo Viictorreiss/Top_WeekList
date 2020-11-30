@@ -15,37 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class loginTela extends javax.swing.JFrame {
 
-    /**Connection conexao = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-    
-    public void logar() {
-        String sql = "select * from tbusuarios where nomeUsuario=? and senhaUsuario=?";
-        try {
-            //consulta ao banco de dados das caixas de texto
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, nomeUsuarioLoginField.getText());
-            pst.setString(2, senhaPasswordLoginField.getText());
-            rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                principalTela principal = new principalTela();
-                principal.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "usuário e/ou senha inválido(s)");
-            }
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }*/
 
     /**
      * Creates new form loginTela
      */
     public loginTela() {
         initComponents();
-        //conexao = ConnectionFactory.conector();
+        setLocationRelativeTo(null);
     }
 
     /**

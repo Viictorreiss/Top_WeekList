@@ -7,6 +7,7 @@ package dashboard;
 
 import DAO.AvaliacaoDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +24,16 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
      * Creates new form TelaAvaliarMusica
      */
  
+       private List<Integer> idsAvaliarMusica = new ArrayList<Integer>();
+       private List<Avaliacao> avaliacoes = new ArrayList<>();
     
     public TelaAvaliarMusica()  {
         super("Avaliacoes");
         initComponents();
         setLocationRelativeTo(null);
         preencherTabela();
+        preencherComboBoxMusica();
+//        preencherComboBoxMusicaNota();
     }
 
     private void preencherTabela() {
@@ -40,7 +45,7 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
             //0 é o número de linhas vazias que seriam adicionadas na tabela a partir de
             //uma nova construção da tabela, feita através do new DTM.
             for (AvaliarMusica mf : avaliarMusica) {
-                model.addRow(new Object[]{mf.getNomeMusica(), mf.getNota()});
+                model.addRow(new Object[]{mf.getNome(), mf.getNota()});
             }
             tbAvaliarMusica.setModel(model);
 
@@ -49,6 +54,29 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Tente novamente");
         }
     }
+    
+     private void preencherComboBoxMusica() {
+        musicaCombo.removeAllItems();
+        //Esse método ele remove do combo o que tinha antes, e vai adicionar novamente.
+        //Colocamos esse método para salvar tempo e para não repetir itens quando fosse dar um
+        //atualizar na tela.
+        idsAvaliarMusica = new ArrayList();
+        
+        try {
+           List<Avaliacao> avaliacoes = DAO.AvaliacaoDAO.obterOutrasAvaliacoes();
+
+            for (Avaliacao a : avaliacoes) {
+                musicaCombo.addItem(a.getNome());
+                idsAvaliarMusica.add(a.getIdMusica());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Tente novamente");
+        }
+    }
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,7 +111,15 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
             new String [] {
                 "Musicas", "Minha Nota"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbAvaliarMusica);
 
         avaliarButton.setText("Avaliar");
@@ -92,8 +128,6 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
                 avaliarButtonActionPerformed(evt);
             }
         });
-
-        musicaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         notaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
         notaCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -117,11 +151,12 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
                         .addGap(97, 97, 97)
                         .addComponent(musicaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
-                        .addComponent(notaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
-                        .addComponent(avaliarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(notaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(avaliarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(187, 187, 187))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,9 +169,9 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(musicaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(notaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(notaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(musicaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(avaliarButton)
                 .addContainerGap(44, Short.MAX_VALUE))
@@ -172,11 +207,23 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
 
     private void avaliarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaliarButtonActionPerformed
         
-        //Object --- cast --> String
-        String notaComoString = (String)notaCombo.getSelectedItem();
-        //String -- conversao --> int
-        int nota = Integer.parseInt(notaComoString);
-        JOptionPane.showMessageDialog(null, "nota" +nota);
+        if (AvaliacaoDAO.adicionar()) {
+            //        Object --- cast --> String
+            String notaComoString = (String)notaCombo.getSelectedItem();
+            //String -- conversao --> int
+            int nota = Integer.parseInt(notaComoString);
+            int index = musicaCombo.getSelectedIndex();
+            int idParaAdicionarMusica = idsAvaliarMusica.get(index);
+            AvaliacaoDAO.adicionar(idParaAdicionarMusica, nota);
+            JOptionPane.showMessageDialog(null, "Nota registrada com sucesso");
+//        JOptionPane.showMessageDialog(null, "nota" +nota);
+            preencherTabela();
+            preencherComboBoxMusica();
+
+        } else {
+            
+        }
+
         
     }//GEN-LAST:event_avaliarButtonActionPerformed
 
