@@ -58,7 +58,6 @@ public class AvaliacaoDAO {
          int idUsuario = UsuarioLogado.getIdUsuarioLogado();
             String sql = "SELECT m.idMusica, m.nome\n"
                + "FROM tb_musica AS m\n"
-               + "left join tb_avaliacao as a on m.idMusica = a.idMusica\n"
                + "where m.idMusica not in (select idMusica from tb_avaliacao where idUsuario = ? )";
         List<dashboard.Avaliacao> avaliacoes = new ArrayList<>();
 

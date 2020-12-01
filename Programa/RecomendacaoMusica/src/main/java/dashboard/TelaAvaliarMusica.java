@@ -207,7 +207,6 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
 
     private void avaliarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaliarButtonActionPerformed
         
-        if (AvaliacaoDAO.adicionar()) {
             //        Object --- cast --> String
             String notaComoString = (String)notaCombo.getSelectedItem();
             //String -- conversao --> int
@@ -219,11 +218,6 @@ public class TelaAvaliarMusica extends javax.swing.JFrame {
 //        JOptionPane.showMessageDialog(null, "nota" +nota);
             preencherTabela();
             preencherComboBoxMusica();
-
-        } else {
-            
-        }
-
         
     }//GEN-LAST:event_avaliarButtonActionPerformed
 

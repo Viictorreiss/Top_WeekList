@@ -56,7 +56,6 @@ public class ListaGenerosDAO {
          int idUsuario = UsuarioLogado.getIdUsuarioLogado();
             String sql = "SELECT g.idGenero, g.tipo\n"
                     + "from tb_genero as g\n"
-                    + "left join tb_generofavorito as f on f.idGenero = g.idGenero\n"
                     + "where g.idGenero not in (select idGenero from tb_generofavorito where idUsuario = ? );";
         List<dashboard.Genero> generos = new ArrayList<>();
 
